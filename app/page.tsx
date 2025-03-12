@@ -19,9 +19,19 @@ import {
   Github,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   // Add smooth scrolling for anchor links
   useEffect(() => {
     const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -70,28 +80,56 @@ export default function Home() {
               AITutorials.com
             </span>
           </Link>
-          <div className="flex flex-1 items-center justify-end space-x-4">
+          <div className="flex flex-1 items-center justify-end space-x-2 md:space-x-4">
             <nav className="flex items-center space-x-2">
-              <Button variant="ghost" asChild>
-                <Link href="#tutorials">Tutorials</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="#about">About</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="#contact">Contact</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <a
-                  href="https://github.com/slavingia/aitutorials.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center"
-                >
-                  <Github className="mr-2 h-4 w-4" />
-                  GitHub
-                </a>
-              </Button>
+              {/* Mobile Menu Icon */}
+              <div className="md:hidden">
+                <button onClick={toggleMenu} className="flex items-center">
+                  <span className="h-5 w-5">☰</span>
+                </button>
+              </div>
+
+              {/* Mobile Dropdown Menu */}
+              {isMenuOpen && (
+                <div className="absolute  bg-slate-100  dark:bg-blue-800 right-2 mt-52 w-48 shadow-lg rounded-lg p-4 z-50">
+                  <Link href="#tutorials" className="block mb-2 text-black hover:text-blue-500" onClick={closeMenu}>Tutorials</Link>
+                  <Link href="#about" className="block mb-2 text-black hover:text-blue-500" onClick={closeMenu}>About</Link>
+                  <Link href="#contact" className="block mb-2 text-black hover:text-blue-500" onClick={closeMenu}>Contact</Link>
+                  <a
+                    href="https://github.com/slavingia/aitutorials.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block mb-2 text-black hover:text-blue-500"
+                    onClick={closeMenu}
+                  >
+                    GitHub
+                  </a>
+                </div>
+              )}
+
+              {/* Desktop Buttons */}
+              <div className="hidden md:flex space-x-2">
+                <Button variant="ghost" asChild>
+                  <Link href="#tutorials">Tutorials</Link>
+                </Button>
+                <Button variant="ghost" asChild>
+                  <Link href="#about">About</Link>
+                </Button>
+                <Button variant="ghost" asChild>
+                  <Link href="#contact">Contact</Link>
+                </Button>
+                <Button variant="ghost" asChild>
+                  <a
+                    href="https://github.com/slavingia/aitutorials.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center"
+                  >
+                    <Github className="mr-2 h-4 w-4" />
+                    GitHub
+                  </a>
+                </Button>
+              </div>
               <ThemeToggle />
             </nav>
           </div>
@@ -135,7 +173,7 @@ export default function Home() {
             workflow, from ideation to execution.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
               <Card>
                 <CardHeader>
@@ -219,7 +257,7 @@ export default function Home() {
             and write better code.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
               <Card>
                 <CardHeader>
